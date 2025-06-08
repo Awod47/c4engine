@@ -50,26 +50,27 @@ def winning_move(board, piece):
         for col in range(COLS-3):
             if board[row][col] == piece and board[row-1][col+1] == piece and board[row-2][col+2] == piece and board[row-3][col+3] == piece:
                 return True
-            
-while not game_over:
-    
-    try:
-        player = turn+1
-        col = int(input(f'player {player}:'))
-        if 0<col<=COLS and is_valid_location(board, col-1):
-            row = get_next_open_row(board, col-1)
-            drop_piece(board, row, col-1, player)
 
-            if winning_move(board, player):
-                print(f'player {player} wins')
-                game_over = True
+if __name__ == '__main__':            
+    while not game_over:
+        
+        try:
+            player = turn+1
+            col = int(input(f'player {player}:'))
+            if 0<col<=COLS and is_valid_location(board, col-1):
+                row = get_next_open_row(board, col-1)
+                drop_piece(board, row, col-1, player)
 
+                if winning_move(board, player):
+                    print(f'player {player} wins')
+                    game_over = True
 
-        else:
-            print('invalid column try again')
-    
-    except ValueError:
-        print('enter a valid integer')
+                turn = (turn + 1)%2
 
-    print(board)
-    turn = (turn + 1)%2
+            else:
+                print('invalid column try again')
+        
+        except ValueError:
+            print('enter a valid integer')
+
+        print(board)
