@@ -2,6 +2,7 @@ import pygame
 import sys
 import numpy as np
 from connect4 import create_board, is_valid_location, get_next_open_row, drop_piece, winning_move 
+from random_move import random_ai
 
 colors = {
     'BOARD': (104,16,73),
@@ -44,7 +45,6 @@ def draw_board(board):
 screen = pygame.display.set_mode(size)
 draw_board(board)
 
-
 while not game_over:
 
     for event in pygame.event.get():
@@ -77,3 +77,26 @@ while not game_over:
             
             except ValueError:
                 print('enter a valid integer')
+
+    if turn == 1 and not game_over:
+        player = 2
+        col = random_ai(board)
+        if col is not None:
+            row = get_next_open_row(board, col)
+            drop_piece(board, row, col, player)
+            draw_board(board)
+
+            if winning_move(board, player):
+                print('ai wins')
+                label = my_font.render(f'AI wins', 1, colors.get(f'PLAYER2'))
+                screen.blit(label, (40,10))
+                pygame.display.update()
+                pygame.time.wait(3000)
+                game_over = True
+
+            print(board)
+            turn = (turn + 1)%2
+
+        else:
+            print('no more columns left')
+            game_over = True
