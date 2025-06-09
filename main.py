@@ -1,8 +1,7 @@
 import pygame
 import sys
 import numpy as np
-from connect4 import create_board, is_valid_location, get_next_open_row, drop_piece, winning_move 
-from random_move import random_ai
+from connect4 import create_board, is_valid_location, get_next_open_row, drop_piece, winning_move, random_ai
 
 colors = {
     'BOARD': (104,16,73),
@@ -89,7 +88,7 @@ while not game_over:
             if winning_move(board, player):
                 print('ai wins')
                 label = my_font.render(f'AI wins', 1, colors.get(f'PLAYER2'))
-                screen.blit(label, (40,10))
+                screen.blit(label, (200,10))
                 pygame.display.update()
                 pygame.time.wait(3000)
                 game_over = True

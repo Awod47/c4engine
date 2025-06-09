@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 ROWS = 6
 COLS = 7
@@ -50,13 +51,25 @@ def winning_move(board, piece):
         for col in range(COLS-3):
             if board[row][col] == piece and board[row-1][col+1] == piece and board[row-2][col+2] == piece and board[row-3][col+3] == piece:
                 return True
+            
+def random_ai(board):
+
+    valid_columns = [col for col in range(7) if is_valid_location(board, col)]
+    if not valid_columns:
+        return
+    col = random.choice(valid_columns)
+    return col
+
 
 if __name__ == '__main__':            
     while not game_over:
         
         try:
             player = turn+1
-            col = int(input(f'player {player}:'))
+            if player == 1:
+                col = int(input(f'player {player}:'))
+            elif player ==2:
+                col = random_ai(board)
             if 0<col<=COLS and is_valid_location(board, col-1):
                 row = get_next_open_row(board, col-1)
                 drop_piece(board, row, col-1, player)
@@ -74,3 +87,6 @@ if __name__ == '__main__':
             print('enter a valid integer')
 
         print(board)
+
+
+
